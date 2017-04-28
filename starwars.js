@@ -4,18 +4,42 @@
 //  - A lista de filmes
 //  - A introdução de cada filme, quando ele for clicado
 
-let episodios = ['I','II','III','IV','V','VI','VII'];
+let episodios = ['IV','V','VI','I','II','III','VII'];
+//let filmesLista = {};
+
+/*
+document.getElementByTag("li").addEventListener("click", function(){
+   document.getElementByClass("reading-animation").innerHTML = "";
+});
+*/
 
 $.ajax({
   url: 'http://swapi.co/api/films/',
-  method: 'GET',      // opcional: 'GET' é o valor padrão
+  type: 'GET',      // opcional: 'GET' é o valor 
+
+
   success: function(resposta) {
-  	$('#movies ul').innerHTML="";
-    for(let filmes of result.results){
-        $('#movies ul').append('<li data-episode-url' + filmes.url + '>Episode ' + episodios[filmes.episode_id-1] + '</li');
+  	$('#movies ul').empty();
+  	$('.reading-animation').empty();
+  	console.log(resposta);
+    for(let filmes of resposta.results){
+      $('#movies ul').append('<li data-episode-url="' + filmes.url + '">Episódio ' 
+      	+ episodios[filmes.episode_id-1] + '</li');
+
+    console.log(filmes.opening_crawl);
+      $('.reading-animation').append(filmes.opening_crawl);
     }
+
+
+    /*
+    for (i = 0; i < filmes.lenght; i++) { 
+      filmesLista[i] = filmes[i].opening_crawl;
+    }
+    */
+
   }
+
+ 
 });
-
-
+  
 
